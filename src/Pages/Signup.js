@@ -2,9 +2,12 @@ import React, { useState, useRef, useLayoutEffect } from 'react'
 import "./signup.css"
 import Navbar from '../components/Navbar'
 import axios from "axios"
-import {toast} from 'react'
+import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
+
+  const navigate = useNavigate()
 
   const handleSignup = (e) =>{
     e.preventDefault()
@@ -13,14 +16,25 @@ function Signup() {
     
     axios.post("http://localhost:8000/signup/", form)
     .then((res) =>{
+     
       toast.success("signup successful")
-
+      navigate("/");
     })
     .catch((err) =>{
-      for(let i in err.response.data){
-        toast.error()
-      }
+      
+      if(err.response.data ===  "Input field cannot be empty"){
+        toast.error("Input field cannot be empty")
+      
+      }else if(err.response.data === "Email Already Exists"){
 
+      }else{
+        for(let i in err.response.data){
+          toast.error(`${i}: ${err.response.data[i]}`)
+
+      }
+    }
+      
+      
     })
 
   }

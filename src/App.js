@@ -17,7 +17,9 @@ function App() {
       <Route path='/signup' element={ <Signup/> } />
       <Route path='*' element={ <NotFound/> } />
       </Routes>
-      <ToastContainer/>
+      <ToastContainer
+      positio='top-center'
+      />
     </BrowserRouter>
   )
 }
